@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+celery = "*"
+djongo = "*"
+mongoengine = "*"
+pylint-mongoengine = "*"
+pymongo = "*"
+psycopg2-binary = "*"
+redis = "*"
+faker = "*"
+sqlparse = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
