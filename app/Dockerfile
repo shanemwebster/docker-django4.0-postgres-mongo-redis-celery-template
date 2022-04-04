@@ -21,7 +21,7 @@ RUN apt-get update \
     libc-dev \
     bash \
     git \
-    && pip3 install --upgrade pip3
+    && pip install --upgrade pip
 
 ##############################
 ### Set my environment variables

@@ -16,14 +16,14 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=password
       - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
-      - MONGO_INITDB_USERNAME=${MONGO_DB_USER}
+      - MONGO_INITDB_USERNAME=${MONGO_DB_USERNAME}
       - MONGO_INITDB_PASSWORD=${MONGO_DB_PASSWORD}
     volumes:
       - ${PWD}/_data/mongo:/data/db
       - ${PWD}/docker/_mongo/fixtures:/import
       - ${PWD}/docker/_mongo/scripts/init.sh:/docker-entrypoint-initdb.d/setup.sh
 
- ############################
+############################
 ### Postgres Database Container
 ############################ 
   postgres:
@@ -40,7 +40,7 @@ services:
       - 5432:5432
     volumes:
       - ${PWD}/_data/postgres:/var/lib/postgresql/data
-      - ${PWD}/_docker/_postgres/scripts/create_test_db.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+      - ${PWD}/docker/_postgres/scripts/create_test_db.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
 
 ############################
 ### Redis Database Container
@@ -59,7 +59,7 @@ services:
 ############################
 ### Django App Container
 ############################
-app:
+  app:
     build: ./app
     image: app:latest
     container_name: app
@@ -77,7 +77,7 @@ app:
 ############################
 ### Celery App Container
 ############################
-celery:
+  celery:
     build: ./app
     image: app:latest
     container_name: celery
