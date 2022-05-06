@@ -43,20 +43,6 @@ services:
       - ${PWD}/docker/_postgres/scripts/create_test_db.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
 
 ############################
-### Redis Database Container
-############################
-  redis:
-    image: redis
-    container_name: redis
-    restart: always
-    env_file: .env
-    command: redist-server --requirepass $REDIS_PASSWORD
-    ports:
-      - 6379:6379
-    volumes:
-      - ${PWD}/_data/redis:/var/lib/redis
-
-############################
 ### Django App Container
 ############################
   app:
@@ -72,39 +58,6 @@ services:
       - 8000:8000
     depends_on:
       - postgres
-      - redis
-
-############################
-### Celery App Container
-############################
-  celery:
-    build: ./app
-    image: app:latest
-    container_name: celery
-    restart: always
-    command: [
-      "celery",
-      "-A",
-      "app",
-      "worker",
-      "-c",
-      "1",
-      "-l",
-      "INFO",
-      "--without-heartbeat",
-      "--without-gossip",
-      "--without-mingle",
-    ]
-    env_file: .env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings
-      - DJANGO_WSGI=app.wsgi
-      - DEBUG=False
-    volumes:
-      - ${PWD}/app:/app
-    depends_on:
-      - postgres
-      - redis
 
 networks:
   default:
